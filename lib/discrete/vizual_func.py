@@ -74,11 +74,16 @@ def discrete_value_to_poligonom(d_value: DiscreteRandomValue, color: str = 'blac
 def get_empirical_distribution_func(intervals: list[Interval], color: str='black') -> go.Scatter:
     x = []
     y = []
+    diff = intervals[-1].start - intervals[0].stop
+    intervals[0].start = intervals[0].stop - diff / len(intervals)
+    intervals[-1].stop = intervals[-1].start + diff / len(intervals)
     for interval in intervals:
         x.append(interval.start)
         x.append(interval.stop)
+        x.append(None)
         y.append(interval.size)
         y.append(interval.size)
+        y.append(None)
     scatter = go.Scatter(
         x=x,
         y=y,
