@@ -24,10 +24,10 @@ def show_summary(results: list, histogram_interval_size: Decimal | None = None):
         subplot_titles=(
             'Функция распределения',
             'Гистограмма',
-            'Полигоном',
+            'Полигон',
         ),
         vertical_spacing=0.08,
-        row_heights=[0.8, 0.8, 0.8],
+        row_heights=[1, 1, 1],
         shared_xaxes=True
     )
     distribution_func = vizual_func.get_empirical_distribution_func(intervals=empiric_func_table, color='blue')
@@ -37,6 +37,11 @@ def show_summary(results: list, histogram_interval_size: Decimal | None = None):
         histogram_interval_size = math_func.get_histogram_interval_size(d_value=d_value)
         print(f'\nРассчитанный размер интервала для гистограммы: {histogram_interval_size}')
     intervals = vizual_func.elements_to_same_intervals(elements=d_value.elements, interval_size=histogram_interval_size)
+
+    print('Интервалы:')
+    for interval in intervals:
+        print(f'{interval.start} | {interval.stop} | {interval.size}')
+
     bars = vizual_func.intervals_to_bars_scatter(intervals=intervals)
     fig.add_trace(bars, row=2, col=1)
 

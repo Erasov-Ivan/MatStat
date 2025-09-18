@@ -3,9 +3,12 @@ import plotly.graph_objects as go
 from prettytable import PrettyTable
 
 
-def elements_to_same_intervals(elements: list[Element], interval_size: Decimal) -> list[Interval]:
+def elements_to_same_intervals(
+        elements: list[Element], interval_size: Decimal, start: Decimal = None
+) -> list[Interval]:
     result: list[Interval] = []
-    start = elements[0].value - interval_size / 2
+    if start is None:
+        start = elements[0].value - interval_size / 2
     while start < elements[-1].value:
         result.append(
             Interval(
