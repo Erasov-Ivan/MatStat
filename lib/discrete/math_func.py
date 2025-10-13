@@ -9,7 +9,7 @@ def get_results_average(d_value: DiscreteRandomValue) -> Decimal:
 def get_dispersion(d_value: DiscreteRandomValue) -> Decimal:
     """Дисперсия"""
     ra = get_results_average(d_value=d_value)
-    dispersion = sum(map(lambda elem: (elem.value - ra) ** 2, d_value.elements)) / len(d_value.elements)
+    dispersion = sum(map(lambda elem: ((elem.value - ra) ** 2) * elem.times, d_value.elements)) / sum(map(lambda elem: elem.times, d_value.elements))
     return Decimal(dispersion)
 
 
@@ -18,7 +18,7 @@ def get_right_dispersion(d_value: DiscreteRandomValue) -> Decimal:
     if len(d_value.elements) <= 1:
         raise Exception('Not enough elements')
     ra = get_results_average(d_value=d_value)
-    dispersion = sum(map(lambda elem: (elem.value - ra) ** 2, d_value.elements)) / (len(d_value.elements) - 1)
+    dispersion = sum(map(lambda elem: ((elem.value - ra) ** 2) * elem.times, d_value.elements)) / (sum(map(lambda elem: elem.times, d_value.elements)) - 1)
     return Decimal(dispersion)
 
 
@@ -48,12 +48,13 @@ def get_empirical_distribution_func_table(d_value: DiscreteRandomValue) -> list[
 
 def get_histogram_interval_size(d_value: DiscreteRandomValue) -> Decimal:
     diff = d_value.elements[-1].value - d_value.elements[0].value
-    while diff % 10 != 0:
+    while int(diff) != diff:
         diff *= 10
-    diff /= 10
+
     intervals_num = 5
     for delimiter in range(6, d_value.elements_num + 1):
         if diff % delimiter == 0:
             intervals_num = delimiter
+    diff = d_value.elements[-1].value - d_value.elements[0].value
     interval_size = Decimal(diff / intervals_num)
     return interval_size

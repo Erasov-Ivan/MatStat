@@ -1,10 +1,22 @@
 from lib.discrete.summary import show_summary
 from decimal import Decimal
 
-results = [
-    '0.9', '0.9', '1.0', '0.4', '0.7', '1.0', '0.8', '0.7', '0.1', '1.0',
-    '0.9', '0.2', '0.8', '0.2', '0.5', '0.8', '0.7', '0.6', '0.2', '0.8',
-    '0.2', '0.6', '0.9', '0.7', '1.0', '0.2', '0.1', '0.0', '0.6', '0.3'
-]
+res = {
+    0: 28,
+    1: 47,
+    2: 81,
+    3: 67,
+    4: 53,
+    5: 24,
+    6: 13,
+    7: 8,
+    8: 3,
+    9: 2,
+    10: 1
+}
 
-show_summary(results=results)
+result = []
+for key, value in res.items():
+    for i in range(value):
+        result.append(key)
+show_summary(results=result)
