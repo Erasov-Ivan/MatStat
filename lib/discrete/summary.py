@@ -1,6 +1,9 @@
 from lib.discrete import classes, math_func, vizual_func
 from plotly.subplots import make_subplots
 from decimal import Decimal
+import plotly.io as pio
+
+pio.renderers.default = "browser"
 
 
 def show_summary(results: list, histogram_interval_size: Decimal | None = None):
@@ -31,7 +34,7 @@ def show_summary(results: list, histogram_interval_size: Decimal | None = None):
             'Полигон',
         ),
         vertical_spacing=0.08,
-        row_heights=[1, 1, 1],
+        row_heights=[4, 1, 1],
         shared_xaxes=True
     )
     distribution_func = vizual_func.get_empirical_distribution_func(intervals=empiric_func_table, color='blue')

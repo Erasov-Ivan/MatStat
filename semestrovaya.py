@@ -1,6 +1,9 @@
 from lib.discrete.summary import show_summary
 from decimal import Decimal
-
+from kolmogorov import kolmogorov
+import math
+from lib.discrete.classes import discrete_value_from_results
+from lib.discrete import math_func
 
 task_1 = [
     5, 5, 3, 3, 3, 5, 1, 5, 5, 6, 7, 4, 6, 4, 5, 3, 4, 9, 4, 6, 5, 3, 6, 4, 9, 3, 4, 4, 5, 4, 8,
@@ -19,5 +22,15 @@ task_2 = [
     '2219.4', '2318', '2119.3', '2290'
 ]
 
-show_summary(results=task_2, histogram_interval_size=Decimal(50))
+
+d_value = discrete_value_from_results(results=task_2)
+
+def F(x: Decimal) -> Decimal:
+    x = (x - math_func.get_results_average(d_value=d_value)) / Decimal(math.sqrt(math_func.get_right_dispersion(d_value=d_value)))
+    return Decimal('0.5') * Decimal(math.erf(x / Decimal(math.sqrt(2)))) + Decimal('0.5')
+
+
+kolmogorov(d_value=d_value, F=F)
+
+#show_summary(results=task_2, histogram_interval_size=Decimal(50))
 
